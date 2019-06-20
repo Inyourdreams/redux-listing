@@ -1,0 +1,46 @@
+.main {
+  width: 100%;
+  background: rgba(24, 32, 23, 0.8);
+  text-align: center;
+  height: 100%;
+}
+
+.scroll-loader {
+  margin-left: 150px;
+}
+
+.p-6 {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.listing-item-name {
+  color: white;
+  font-size: 20px;
+}
+
+.w-1\/3 {
+  width: 25.333333%;
+  height: 20%;
+  margin: 9px;
+}
+
+@media screen and (max-width: 600px) {
+  .flex-wrap {
+    padding-left: 12px;
+  }
+
+  .w-1\/3 {
+    width: 27.333%;
+    height: 16%;
+    margin: 9px;
+  }
+  .listing-item-name {
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  img {
+    margin-left: 70px;
+  }
+}
