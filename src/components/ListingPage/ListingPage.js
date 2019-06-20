@@ -5,7 +5,6 @@ import Loader from 'react-loader-spinner'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { connect } from 'react-redux'
 import { setListingData, setIndex } from '../../modules/listingReducer'
-import { tsObjectKeyword } from '@babel/types'
 
 const ListingPage = ({
   setListingData,
@@ -15,13 +14,15 @@ const ListingPage = ({
   search,
 }) => {
   const fetchNextData = index => {
-    return axios(`/CONTENTLISTINGPAGE-PAGE${index}.json`).then(
-      res => res.data.page['content-items'].content,
-    )
+    return axios(`/CONTENTLISTINGPAGE-PAGE${index}.json`)
+      .then(
+        res => res.data.page['content-items'].content,
+      )
   }
 
   const setListing = () => {
-    fetchNextData(idx).then(r => setListingData(r))
+    fetchNextData(idx)
+      .then(r => setListingData(r))
     setIndex(idx + 1)
   }
 
@@ -49,19 +50,11 @@ const ListingPage = ({
         <div className="flex flex-wrap">
           {listingData.length > 0 &&
             listingData
-              .filter(obj => {
-                return (
-                  obj.name.toLowerCase().indexOf(search.toLowerCase()) !== -1
-                )
-              })
+              .filter(obj => obj.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
               .map((item, idx) => (
                 <div key={idx} className="w-1/3 h-12">
                   <img
-                    className={
-                      item['poster-image'] === 'posterthatismissing.jpg'
-                        ? 'missing-poster'
-                        : ''
-                    }
+                    className={item['poster-image'] === 'posterthatismissing.jpg' && 'missing-poster'}
                     key={idx}
                     src={
                       item['poster-image'] === 'posterthatismissing.jpg'
