@@ -2,7 +2,6 @@ const SET_LISTING_DATA = 'SET_LISTING_DATA'
 const SET_INDEX = 'SET_INDEX'
 
 const defaultState = {
-  hasMore: true,
   listingData: [],
   idx: 1,
 }

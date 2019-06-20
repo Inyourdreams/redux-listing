@@ -5,13 +5,14 @@ import Loader from 'react-loader-spinner'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { connect } from 'react-redux'
 import { setListingData, setIndex } from '../../modules/listingReducer'
+import { tsObjectKeyword } from '@babel/types'
 
 const ListingPage = ({
   setListingData,
   listingData,
-  hasMore,
   idx,
   setIndex,
+  search,
 }) => {
   const fetchNextData = index => {
     return axios(`/CONTENTLISTINGPAGE-PAGE${index}.json`).then(
@@ -20,7 +21,6 @@ const ListingPage = ({
   }
 
   const setListing = () => {
-    console.log('&*&**&(*(&')
     fetchNextData(idx).then(r => setListingData(r))
     setIndex(idx + 1)
   }
@@ -48,20 +48,31 @@ const ListingPage = ({
       >
         <div className="flex flex-wrap">
           {listingData.length > 0 &&
-            listingData.map((item, idx) => (
-              <div key={idx} className="w-1/3 h-12">
-                <img
-                  key={idx}
-                  src={
-                    item['poster-image'] === 'posterthatismissing.jpg'
-                      ? require(`../../Slices/placeholder_for_missing_posters.png`)
-                      : require(`../../Slices/${item['poster-image']}`)
-                  }
-                  alt={item.name}
-                />
-                <span className="listing-item-name">{item.name}</span>
-              </div>
-            ))}
+            listingData
+              .filter(obj => {
+                return (
+                  obj.name.toLowerCase().indexOf(search.toLowerCase()) !== -1
+                )
+              })
+              .map((item, idx) => (
+                <div key={idx} className="w-1/3 h-12">
+                  <img
+                    className={
+                      item['poster-image'] === 'posterthatismissing.jpg'
+                        ? 'missing-poster'
+                        : ''
+                    }
+                    key={idx}
+                    src={
+                      item['poster-image'] === 'posterthatismissing.jpg'
+                        ? require(`../../Slices/placeholder_for_missing_posters.png`)
+                        : require(`../../Slices/${item['poster-image']}`)
+                    }
+                    alt={item.name}
+                  />
+                  <span className="listing-item-name">{item.name}</span>
+                </div>
+              ))}
         </div>
       </InfiniteScroll>
     </div>
@@ -72,7 +83,7 @@ const mapStateToProps = state => {
   return {
     idx: state.listing.idx,
     listingData: state.listing.listingData,
-    hasMore: state.listing.hasMore,
+    search: state.search.value,
   }
 }
 

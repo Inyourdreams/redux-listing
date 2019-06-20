@@ -19,7 +19,7 @@
 }
 
 .w-1\/3 {
-  width: 25.333333%;
+  width: 30.333333%;
   height: 20%;
   margin: 9px;
 }
@@ -43,4 +43,14 @@
   img {
     margin-left: 70px;
   }
+}
+
+@media screen and (min-width: 1300px) {
+  .listing-item-name {
+    margin-right: 200px;
+  }
+}
+
+.missing-poster {
+  width: 180px;
 }
