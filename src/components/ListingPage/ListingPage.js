@@ -1,6 +1,6 @@
-import React, { useEffect, use } from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
-import './ListingPage.css'
+import './ListingPage.css'    
 import Loader from 'react-loader-spinner'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { connect } from 'react-redux'
@@ -50,11 +50,13 @@ const ListingPage = ({
         <div className="flex flex-wrap">
           {listingData.length > 0 &&
             listingData
-              .filter(obj => obj.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
+              .filter(obj => obj.name
+                .toLowerCase()
+                .indexOf(search.toLowerCase()) !== -1)
               .map((item, idx) => (
                 <div key={idx} className="w-1/3 h-12">
                   <img
-                    className={item['poster-image'] === 'posterthatismissing.jpg' && 'missing-poster'}
+                    className={item['poster-image'] === 'posterthatismissing.jpg' ? 'missing-poster' : '  '}
                     key={idx}
                     src={
                       item['poster-image'] === 'posterthatismissing.jpg'
@@ -63,7 +65,12 @@ const ListingPage = ({
                     }
                     alt={item.name}
                   />
-                  <span className="listing-item-name">{item.name}</span>
+                  <p className={
+                    item.name.length < 13
+                      ? 'listing-item-name'
+                      : 'long-item-name'}>
+                        {item.name}
+                  </p>
                 </div>
               ))}
         </div>
